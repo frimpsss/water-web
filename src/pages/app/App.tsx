@@ -1,7 +1,7 @@
 
 const App = () => {
   return (
-    <div>Main App</div>
+    <div></div>
   )
 }
 
