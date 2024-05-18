@@ -1,11 +1,11 @@
 import * as Icon from "iconsax-react";
 import whitelogo from "../../assets/logo-white.svg";
 import DashboardIcon from "./DashboardIcon";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const DashboardNavbar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  const r = useNavigate();
   const nav_links = [
     {
       title: "Home",
@@ -14,17 +14,17 @@ const DashboardNavbar = () => {
     },
     {
       title: "Transactions",
-      link: "/transactions",
+      link: "/dashboard/transactions",
       icon: "TransactionMinus",
     },
     {
       title: "Tariffs",
-      link: "/tariffs",
+      link: "/dashboard/tariffs",
       icon: "WalletMoney",
       children: [
         {
           title: "Set Tariffs",
-          path: "/tarrifs/set-tarrifs",
+          path: "/dashboard/tarrifs/set-tarrifs",
         },
         {
           title: "Change Log",
@@ -34,37 +34,37 @@ const DashboardNavbar = () => {
     },
     {
       title: "Billing",
-      link: "/billing",
+      link: "/dashboard/billing",
       icon: "TableDocument",
     },
     {
       title: "Reports",
-      link: "/reports",
+      link: "/dashboard/reports",
       icon: "DocumentUpload",
     },
     {
       title: "Messages",
-      link: "/messages",
+      link: "/dashboard/messages",
       icon: "Message2",
       children: [
         {
           title: "Send Messages",
-          path: "/messages/send",
+          path: "/dashboard/messages/send",
         },
         {
           title: "All Messages",
-          path: "/messages/all",
+          path: "/dashboard/messages/all",
         },
       ],
     },
     {
       title: "Customer Data",
-      link: "/customers",
+      link: "/dashboard/customers",
       icon: "UserSquare",
     },
     {
       title: "Meter Data",
-      link: "/meters",
+      link: "/dashboard/meters",
       icon: "MainComponent",
     },
   ];
@@ -77,10 +77,13 @@ const DashboardNavbar = () => {
         </div>
 
         {/* nav */}
-        <nav className=" flex flex-col gap-4">
+        <nav className=" flex flex-col gap-2">
           {nav_links.map((e, k) => {
             return (
               <div
+                onClick={() => {
+                  r(e.link);
+                }}
                 key={k}
                 className={` cursor-pointer hover:bg-[white]/30 group px-2 py-3 rounded-lg duration-500 flex items-center gap-6 ${
                   pathname == e.link && "bg-white-100/30"
@@ -108,8 +111,12 @@ const DashboardNavbar = () => {
             AF
           </span>
           <div>
-            <h4 className="text-white-50 text-[0.9rem] font-medium">Akwasi Frimpong</h4>
-            <p className="text-[0.8rem] font-extralight text-white-200">Adminstrator</p>
+            <h4 className="text-white-50 text-[0.9rem] font-medium">
+              Akwasi Frimpong
+            </h4>
+            <p className="text-[0.8rem] font-extralight text-white-200">
+              Adminstrator
+            </p>
           </div>
         </div>
         <div className="text-white-50 flex gap-6 cursor-pointer bg-[white]/5 group px-2 py-3 rounded-lg  duration-500 items-center mt-6">
