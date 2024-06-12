@@ -11,6 +11,7 @@ import Meters from "../pages/app/Meters";
 import Transactions from "../pages/app/Transactions";
 import Tarrifs from "../pages/app/Tarrifs";
 import Reports from "../pages/app/Reports";
+import Settings from "../pages/app/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "customers",
         element: <Customers />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },

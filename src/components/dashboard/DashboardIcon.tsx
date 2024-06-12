@@ -9,7 +9,13 @@ const DashboardIcon = ({
   const IconComponet = Icons[title];
   return (
     <div>
-      {<IconComponet size={20} color={active ? "#ffffff" : "#989898"} />}
+      {
+        <IconComponet
+          size={20}
+          color={active ? "#ffffff" : "#989898"}
+          variant={active ? "Bold" : "Linear"}
+        />
+      }
     </div>
   );
 };

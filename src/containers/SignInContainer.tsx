@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../components/shared/InputField";
+import { useMutation } from "react-query";
+import { signInMutation } from "../api/mutation/auth";
 const SignInContainer = () => {
   const r = useNavigate();
   const { ...form } = useFormik({
@@ -10,8 +12,25 @@ const SignInContainer = () => {
     },
     onSubmit: (v: any) => {},
   });
+
+  const { data, isLoading, mutate } = useMutation({
+    mutationFn: signInMutation,
+    onSuccess(data, variables, context) {
+      if(data?.data?.status){
+        localStorage.setItem('auth', data?.data?.data)
+        r('/dashboard')
+      }
+    },
+  });
+
+  function handleOnSubmit() {
+    mutate({
+      email: form.values.email,
+      password: form.values.password,
+    });
+  }
   return (
-    <form className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" onSubmit={() => form.handleSubmit()}>
       <TextInput
         type={"text"}
         placeholder={"e.g. admin@aquatrack.com"}
@@ -36,15 +55,14 @@ const SignInContainer = () => {
         Forgot your password?
       </p>
       <button
-        type="submit"
         className="bg-mantis-950/90 hover:bg-mantis-950 duration-500 text-[#ffffff] py-2 rounded-md font-medium"
         onClick={() => {
-          r("/dashboard");
+          handleOnSubmit();
         }}
       >
-        Sign In
+        {isLoading ? "Loading..." : "Sign in"}
       </button>
-    </form>
+    </div>
   );
 };
 
