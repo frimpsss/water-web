@@ -53,7 +53,7 @@ const App = () => {
         <div className="col-span-12 grid grid-cols-4 gap-6">
           {stats.map((e, i) => {
             return (
-              <div className="bg-white-50 p-6 rounded-md cursor-pointer duration-700 hover:scale-[1.05]">
+              <div className="bg-white-50 p-6 rounded-md cursor-pointer duration-700 hover:scale-[1.05] flex flex-col justify-between">
                 <div className=" flex items-center justify-between text-mantis-950 ">
                   <h2 className="text-[0.9rem] font-semibold text-mantis-950">
                     {e.h1}
