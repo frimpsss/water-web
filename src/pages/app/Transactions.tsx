@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const Transactions = () => {
+  const [open, setOpen] = useState(false);
+  const [sidebar, OpenSideBar] = useState(false);
   return (
-    <div>Transactions</div>
-  )
-}
+    <div>
 
-export default Transactions
+    </div>
+  );
+};
+
+export default Transactions;

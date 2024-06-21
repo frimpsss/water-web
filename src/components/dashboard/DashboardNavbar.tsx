@@ -78,7 +78,7 @@ const DashboardNavbar = () => {
     },
   ];
 
-  const { data, isLoading } = useQuery("admin-info", {
+  const { isLoading } = useQuery("admin-info", {
     queryFn: getAdminInfo,
     onSuccess(data) {
       setDetails({
@@ -159,7 +159,7 @@ const DashboardNavbar = () => {
                   }
                   return "";
                 })
-                ?.join(" ")}
+                ?.join("")}
             </span>
             <div>
               <h4 className="text-white-50 text-[0.9rem] font-medium">

@@ -1,81 +1,146 @@
 import { createBrowserRouter } from "react-router-dom";
-import AuthLayout from "../layouts/auth/Auth.layout";
-import Signin from "../pages/auth/Signin";
-import { default as MainApp } from "../pages/app/App";
-import ForgotPassword from "../pages/auth/ForgotPassword";
-import DashboardLayout from "../layouts/app/DashboardLayout";
-import Billing from "../pages/app/Billing";
-import Customers from "../pages/app/Customers";
-import Messages from "../pages/app/Messages";
-import Meters from "../pages/app/Meters";
-import Transactions from "../pages/app/Transactions";
-import Tarrifs from "../pages/app/Tarrifs";
-import Reports from "../pages/app/Reports";
-import Settings from "../pages/app/Settings";
+import { Suspense, lazy } from "react";
+import Loader from "../components/shared/Loader";
+const AuthLayout = lazy(() => import("../layouts/auth/Auth.layout"));
+const Signin = lazy(() => import("../pages/auth/Signin"));
+const ForgotPassword = lazy(() => import("../pages/auth/ForgotPassword"));
+const MainApp = lazy(() => import("../pages/app/App"));
+const DashboardLayout = lazy(() => import("../layouts/app/DashboardLayout"));
+const Billing = lazy(() => import("../pages/app/Billing"));
+const Customers = lazy(() => import("../pages/app/Customers"));
+const Messages = lazy(() => import("../pages/app/Messages"));
+const Meters = lazy(() => import("../pages/app/Meters"));
+const Transactions = lazy(() => import("../pages/app/Transactions"));
+const Tarrifs = lazy(() => import("../pages/app/Tarrifs"));
+const Reports = lazy(() => import("../pages/app/Reports"));
+const Settings = lazy(() => import("../pages/app/Settings"));
 
+const LazyWrapper = ({ children }) => (
+  <Suspense fallback={<Loader />}>{children}</Suspense>
+);
 export const router = createBrowserRouter([
   {
     path: "/auth/",
-    element: <AuthLayout />,
+    element: (
+      <LazyWrapper>
+        <AuthLayout />
+      </LazyWrapper>
+    ),
     children: [
       {
         path: "login",
-        element: <Signin />,
+        element: (
+          <LazyWrapper>
+            <Signin />
+          </LazyWrapper>
+        ),
       },
       {
         path: "forgot-password",
-        element: <ForgotPassword />,
+        element: (
+          <LazyWrapper>
+            <ForgotPassword />
+          </LazyWrapper>
+        ),
       },
     ],
   },
   {
-    element: <AuthLayout />,
+    element: (
+      <LazyWrapper>
+        <AuthLayout />
+      </LazyWrapper>
+    ),
     children: [
       {
         path: "/",
-        element: <Signin />,
+        element: (
+          <LazyWrapper>
+            <Signin />
+          </LazyWrapper>
+        ),
       },
     ],
   },
   {
     path: "/dashboard/",
-    element: <DashboardLayout />,
+    element: (
+      <LazyWrapper>
+        <DashboardLayout />
+      </LazyWrapper>
+    ),
     children: [
       {
         path: "",
-        element: <MainApp />,
+        element: (
+          <LazyWrapper>
+            <MainApp />
+          </LazyWrapper>
+        ),
       },
       {
         path: "transactions",
-        element: <Transactions />,
+        element: (
+          <LazyWrapper>
+            <Transactions />
+          </LazyWrapper>
+        ),
       },
       {
         path: "billing",
-        element: <Billing />,
+        element: (
+          <LazyWrapper>
+            <Billing />
+          </LazyWrapper>
+        ),
       },
       {
         path: "reports",
-        element: <Reports />,
+        element: (
+          <LazyWrapper>
+            <Reports />
+          </LazyWrapper>
+        ),
       },
       {
         path: "messages",
-        element: <Messages />,
+        element: (
+          <LazyWrapper>
+            <Messages />
+          </LazyWrapper>
+        ),
       },
       {
         path: "tariffs",
-        element: <Tarrifs />,
+        element: (
+          <LazyWrapper>
+            <Tarrifs />
+          </LazyWrapper>
+        ),
       },
       {
         path: "meters",
-        element: <Meters />,
+        element: (
+          <LazyWrapper>
+            <Meters />
+          </LazyWrapper>
+        ),
       },
       {
         path: "customers",
-        element: <Customers />,
+        element: (
+          <LazyWrapper>
+            <Customers />
+          </LazyWrapper>
+        ),
       },
       {
         path: "settings",
-        element: <Settings />,
+        element: (
+          <LazyWrapper>
+            <Settings />
+          </LazyWrapper>
+        ),
       },
     ],
   },
