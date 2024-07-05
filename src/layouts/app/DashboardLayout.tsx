@@ -17,7 +17,7 @@ const DashboardLayout = () => {
       <div className="col-span-1">
         <DashboardNavbar />
       </div>
-      <div className="col-span-4 p-6 bg-white-100/40 h-[100vh]  overflow-y-scroll">
+      <div className="col-span-4 p-6 bg-white-100/40 h-[100vh] overflow-y-scroll">
         <Outlet />
       </div>
     </div>
