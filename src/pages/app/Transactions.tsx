@@ -3,7 +3,7 @@ import TransactionsStats from "../../components/transactions/stats";
 import Table, {
   HeadersPropsWithRef,
   IAction,
-} from "../../components/shared/table/table";
+} from "../../components/shared/table/TableComponent";
 import Sidebar from "../../components/shared/Sidebar";
 import { Edit, Eye, Trash } from "iconsax-react";
 import { dummy_txns } from "../../utils/data";

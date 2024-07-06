@@ -1,5 +1,5 @@
 import { Checkbox } from "@headlessui/react";
-import { HeadersPropsWithRef } from "./table";
+import { HeadersPropsWithRef } from "./TableComponent";
 import TableHeaderItem from "./TableHeaderItem";
 interface props {
   allSelected: boolean;

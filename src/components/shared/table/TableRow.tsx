@@ -1,8 +1,8 @@
 import { Checkbox } from "@headlessui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
-import { HeadersPropsWithRef, IAction } from "./table";
+import { HeadersPropsWithRef, IAction } from "./TableComponent";
 interface props {
   index: number;
   totalNumberOfItems: number;
