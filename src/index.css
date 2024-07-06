@@ -7,3 +7,32 @@
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
 }
+/* .scrollbar-hide */
+.scrollbar-hide {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* Safari and Chrome */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Safari and Chrome */
+}
+
+/* .scrollbar-default */
+.scrollbar-default {
+  /* IE and Edge */
+  -ms-overflow-style: auto;
+
+  /* Firefox */
+  scrollbar-width: auto;
+
+  /* Safari and Chrome */
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  display: block; /* Display scrollbar for Safari and Chrome */
+}

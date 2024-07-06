@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen, toggleSidebar, children }: Props) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[2px] z-40"
             onClick={toggleSidebar}
           />
 
@@ -26,9 +26,9 @@ const Sidebar = ({ isOpen, toggleSidebar, children }: Props) => {
             animate={{ x: isOpen ? 0 : "-100%" }}
             // exit={{ x: "-100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 right-0 h-full w-[400px] bg-gray-800 text-white shadow-lg z-50"
+            className="fixed top-0 right-0 h-full min-w-[400px] bg-gray-800 bg-white-50 shadow-lg z-50"
           >
-            <div className="p-4 h-full">
+            <div className="p-[10rem] h-full">
               <button
                 onClick={toggleSidebar}
                 className="mb-4 p-2 bg-red-500 rounded"
