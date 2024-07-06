@@ -11,21 +11,32 @@ import { Checkbox } from "@headlessui/react";
 import TableHeader, {
   IProps as HeadersProps,
 } from "../shared/table/TableHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useUrlState from "../../hooks/useUrlState";
+import { isNumeric } from "../../utils";
 const TableComponent = () => {
-  const { queries, appendQuery, getQueryValue } = useUrlState();
+  const { appendQuery, getQueryValue, deleteQuery} = useUrlState();
+
+  useEffect(() => {
+    if (!isNumeric(getQueryValue("limit"))) {
+      deleteQuery("limit");
+    }
+    if (!isNumeric(getQueryValue("start"))) {
+      deleteQuery("start");
+    }
+  }, []);
   const [start, setStart] = useState(() => {
-    const value = getQueryValue("start") as any;
-    console.log(value);
-    return isNaN(value) || !isFinite(value) || !value ? 1 : value;
+    const value = getQueryValue("start");
+    return value == null || !isNumeric(value) ? 0 : Number(value);
   });
 
   const [limit, setLimit] = useState(() => {
-    const value = getQueryValue("limit") as any;
-    console.log(value);
-    return isNaN(value) || !isFinite(value) || !value ? 5 : value;
+    const value = getQueryValue("limit");
+    console.debug(`is ${value} numeric ${isNumeric(value)}`);
+    return value == null || !isNumeric(value) ? 5 : Number(value);
   });
+
+
   const [enabled, setEnabled] = useState(false);
   const dummyData = [
     {
@@ -183,8 +194,15 @@ const TableComponent = () => {
       amount: "GH¢ 22.10",
     },
   ];
-
-  console.log(limit, start);
+  const handleFirstPage = () => {
+    setStart(0);
+    appendQuery("start", "0");
+  };
+  const handleLastPage = () => {
+    const lastIndex = Math.max(dummyData.length - limit, 0);
+    setStart(lastIndex);
+    appendQuery("start", String(lastIndex));
+  };
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = Number(e.currentTarget.value);
     setLimit(newLimit);
@@ -302,8 +320,6 @@ const TableComponent = () => {
 
       <div className="col-span-12">
         <div className="bg-white-50 pt-4  grid grid-cols-12  rounded-md border-[1px] border-mountain-mist-100 ">
-          {/*  */}
-          {/* header */}
           <div className=" h-fit col-span-12 flex items-center border-b-[1px] pb-2   border-mountain-mist-100 px-4">
             <div className="h-fit flex-[1] ">
               <Checkbox
@@ -401,7 +417,7 @@ const TableComponent = () => {
               value={limit}
               onChange={handleLimitChange}
             >
-              <option value={5}>5</option>
+              <option value={7}>7</option>
               <option value={10}>10</option>
               <option value={20}>20</option>
               <option value={30}>30</option>
@@ -418,46 +434,66 @@ const TableComponent = () => {
           <div className="flex gap-1">
             <button
               className={`grid place-items-center border-mountain-mist-100 border-[1px]  rounded  ${
-                start === 0
-                  ? ""
-                  : "focus:bg-white-50 hover:bg-mountain-mist-100"
+                start === 0 ? "" : " hover:bg-mountain-mist-100"
               }`}
               disabled={start === 0}
-              onClick={handlePreviousPage}
+              onClick={handleFirstPage}
             >
-              <ChevronDoubleLeftIcon className="text-mountain-mist-800 h-7 p-1" />
+              <ChevronDoubleLeftIcon
+                className={`text-mountain-mist-800 ${
+                  start === 0
+                    ? "text-mountain-mist-300"
+                    : "text-mountain-mist-800"
+                } h-7 p-1`}
+              />
             </button>
             <button
               className={`grid place-items-center border-mountain-mist-100 border-[1px]  rounded  ${
-                start === 0
-                  ? ""
-                  : "focus:bg-white-50 hover:bg-mountain-mist-100"
+                start === 0 ? "" : " hover:bg-mountain-mist-100"
               }`}
               disabled={start === 0}
               onClick={handlePreviousPage}
             >
-              <ChevronLeftIcon className="text-mountain-mist-800 h-7 p-1" />
+              <ChevronLeftIcon
+                className={`text-mountain-mist-800 ${
+                  start === 0
+                    ? "text-mountain-mist-300"
+                    : "text-mountain-mist-800"
+                } h-7 p-1`}
+              />
             </button>
 
             <button
               className={`grid place-items-center border-mountain-mist-100 border-[1px]  rounded  ${
                 start + limit >= dummyData.length
                   ? ""
-                  : "focus:bg-white-50 hover:bg-mountain-mist-100"
+                  : " hover:bg-mountain-mist-100"
               }`}
               disabled={start + limit >= dummyData.length}
               onClick={handleNextPage}
             >
-              <ChevronRightIcon className="text-mountain-mist-800 h-7 p-1" />
+              <ChevronRightIcon
+                className={`text-mountain-mist-800 ${
+                  start + limit >= dummyData.length
+                    ? "text-mountain-mist-300"
+                    : "text-mountain-mist-800"
+                } h-7 p-1`}
+              />
             </button>
             <button
               className={`grid place-items-center border-mountain-mist-100 border-[1px]  rounded  ${
                 start + limit >= dummyData.length
-              } ? '': 'focus:bg-white-50 hover:bg-mountain-mist-100'}`}
+              } ? '': ' hover:bg-mountain-mist-100'}`}
               disabled={start + limit >= dummyData.length}
-              onClick={handleNextPage}
+              onClick={handleLastPage}
             >
-              <ChevronDoubleRightIcon className="text-mountain-mist-800 h-7 p-1" />
+              <ChevronDoubleRightIcon
+                className={`text-mountain-mist-800 ${
+                  start + limit >= dummyData.length
+                    ? "text-mountain-mist-300"
+                    : "text-mountain-mist-800"
+                } h-7 p-1`}
+              />
             </button>
           </div>
         </div>

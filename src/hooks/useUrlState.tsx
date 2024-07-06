@@ -1,40 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-interface QueryParams {
-  [key: string]: string;
-}
+import React, { useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+
 const useUrlState = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [queries, setQueries] = useState(new URLSearchParams(location.search));
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    setQueries(new URLSearchParams(location.search));
-  }, [location.search]);
+  const appendQuery = useCallback(
+    (key: string, value: string) => {
+      searchParams.set(key, value);
+      setSearchParams(searchParams, { replace: true });
+    },
+    [searchParams, setSearchParams]
+  );
 
-  const appendQuery = (key: string, value: string) => {
-    const newQueries = new URLSearchParams(location.search);
-    newQueries.set(key, value);
-    navigate({ search: newQueries.toString() }, { replace: true });
-  };
+  const deleteQuery = useCallback(
+    (key: string) => {
+      searchParams.delete(key);
+      setSearchParams(searchParams, { replace: true });
+    },
+    [searchParams, setSearchParams]
+  );
 
-  const deleteQuery = (key: string) => {
-    const newQueries = new URLSearchParams(location.search);
-    newQueries.delete(key);
-    navigate({ search: newQueries.toString() }, { replace: true });
-  };
-
-  const getQueryValue = (key: string) => {
-    const queries = new URLSearchParams(location.search);
-    return queries.get(key)
-  };
-  
+  const getQueryValue = useCallback(
+    (key: string) => {
+      return searchParams.get(key);
+    },
+    [searchParams]
+  );
 
   return {
-    queries,
     appendQuery,
     deleteQuery,
-    getQueryValue
+    getQueryValue,
   };
 };
 
