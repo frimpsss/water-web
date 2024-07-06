@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TransactionsStats from "../../components/transactions/stats";
 import Table, {
   HeadersPropsWithRef,
