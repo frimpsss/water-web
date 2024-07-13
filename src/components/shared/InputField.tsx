@@ -16,6 +16,7 @@ interface TextInputProps {
   touched: any;
   strongPassword?: boolean;
   err?: string;
+  boldenText?: boolean;
 }
 const TextInput = ({
   values,
@@ -28,16 +29,22 @@ const TextInput = ({
   label,
   err,
   touched,
+  boldenText = false,
 }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [visible, setVisibile] = useState(false);
   const [t, setT] = useState(false);
   return (
     <div className="">
-      <label htmlFor={id} className="text-mantis-950 text-[1rem] font-normal">
+      <label
+        htmlFor={id}
+        className={`text-mantis-950 text-[1rem] ${
+          boldenText ? "font-semibold" : "font-normal"
+        }`}
+      >
         {label}
       </label>
-      <div className="relative mt-1">
+      <div className="relative mt-2">
         <input
           name={id}
           id={id}
@@ -88,7 +95,9 @@ const TextInput = ({
 
       {errors[id] && touched[id] ? (
         <p
-          className="mt-2 text-[0.7rem] text-[200] text-red-600"
+          className={`  ${
+            !boldenText ? "text-[0.7rem] mt-2" : "text-sm mt-1"
+          } text-[200] text-red-600 `}
           id={`${id}-error`}
         >
           {errors?.[id]}

@@ -10,7 +10,7 @@ import { dummy_txns } from "../../utils/data";
 
 const Transactions = () => {
   const [open, setOpen] = useState(false);
-
+  const [data, setData] = useState();
   const tableHeaders: HeadersPropsWithRef[] = [
     {
       ref: "ref",
@@ -47,8 +47,8 @@ const Transactions = () => {
   const table_actions: IAction[] = [
     {
       title: "View",
-      action(id) {
-        window.alert(id);
+      action(data) {
+        setData(data);
       },
       icon: <Eye size="16" color="#000" variant="Broken" />,
     },
@@ -72,10 +72,10 @@ const Transactions = () => {
     <div className="flex flex-col gap-6">
       <TransactionsStats />
       <Table
+        loading={false}
         actions={table_actions}
         headers={tableHeaders}
         data={dummy_txns}
-        addTitle={"Transaction"}
         onClickAdd={() => {
           setOpen(true);
         }}

@@ -6,11 +6,12 @@ import { isNumeric } from "../../../utils";
 import Pagination from "./Pagination";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
+import TableSkeleton from "../skeleton/TableSkeleton";
 type colType = "text" | "element";
 
 export interface IAction {
   title: string;
-  action: (id?: string) => void;
+  action: (data?: any) => void;
   variant?: "danger" | "regular";
   icon: React.ReactNode;
 }
@@ -22,9 +23,10 @@ export interface HeadersPropsWithRef extends HeadersProps {
 interface props {
   headers: HeadersPropsWithRef[];
   data: any[];
-  addTitle: string;
-  onClickAdd: () => void;
+  addTitle?: string;
+  onClickAdd?: () => void;
   actions: IAction[];
+  loading: boolean;
 }
 const TableComponent = ({
   data,
@@ -32,6 +34,7 @@ const TableComponent = ({
   addTitle,
   onClickAdd,
   actions,
+  loading,
 }: props) => {
   const { appendQuery, getQueryValue, deleteQuery } = useUrlState();
 
@@ -106,46 +109,54 @@ const TableComponent = ({
             className=" focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-white-300 rounded-md py-2 pl-8 relative"
           />
         </div>
-        <button
-          className="text-white-50 bg-mantis-950 flex items-center gap-2  px-5 py-[0.5rem] rounded-md"
-          onClick={onClickAdd}
-        >
-          <PlusIcon className="h-[18px] text-white-50" />
-          <p> Add {addTitle}</p>
-        </button>
+        {addTitle == "" && (
+          <button
+            className="text-white-50 bg-mantis-950 flex items-center gap-2  px-5 py-[0.4rem] rounded-md"
+            onClick={onClickAdd}
+          >
+            <PlusIcon className="h-[18px] text-white-50" />
+            <p> Add {addTitle}</p>
+          </button>
+        )}
       </div>
-      <div className="col-span-12">
-        <div className="bg-white-50 pt-2  grid grid-cols-12  rounded-md border-[1px] border-mountain-mist-100 ">
-          <TableHeader
-            allSelected={enabled}
-            setAllSelected={setEnabled}
-            table_columns={headers}
+      {loading ? (
+        <TableSkeleton table_columns={headers} />
+      ) : (
+        <div className="col-span-12">
+          <div className="bg-white-50 pt-2  grid grid-cols-12  rounded-md border-[1px] border-mountain-mist-100 ">
+            <TableHeader
+              actionsLength={actions.length}
+              allSelected={enabled}
+              setAllSelected={setEnabled}
+              table_columns={headers}
+            />
+            {data?.slice(start, start + limit).map((e, i) => {
+              return (
+                <TableRow
+                  data={e}
+                  actions={actions}
+                  allSelected={enabled ? true : null}
+                  index={i}
+                  totalNumberOfItems={data?.length}
+                  tableColumns={headers}
+                  rowData={e}
+                  key={i}
+                />
+              );
+            })}
+          </div>
+          <Pagination
+            limit={limit}
+            handleLimitChange={handleLimitChange}
+            start={start}
+            totalNumberOfItems={data?.length}
+            handleFirstPage={handleFirstPage}
+            handlePreviousPage={handlePreviousPage}
+            handleNextPage={handleNextPage}
+            handleLastPage={handleLastPage}
           />
-          {data?.slice(start, start + limit).map((e, i) => {
-            return (
-              <TableRow
-                actions={actions}
-                allSelected={enabled ? true : null}
-                index={i}
-                totalNumberOfItems={data?.length}
-                tableColumns={headers}
-                rowData={e}
-                key={i}
-              />
-            );
-          })}
         </div>
-        <Pagination
-          limit={limit}
-          handleLimitChange={handleLimitChange}
-          start={start}
-          totalNumberOfItems={data?.length}
-          handleFirstPage={handleFirstPage}
-          handlePreviousPage={handlePreviousPage}
-          handleNextPage={handleNextPage}
-          handleLastPage={handleLastPage}
-        />
-      </div>
+      )}
     </div>
   );
 };

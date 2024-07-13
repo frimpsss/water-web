@@ -108,6 +108,21 @@ export default {
         900: "#920a0a",
         950: "#500000",
       },
+      pending: {
+        bg: "hsl(49, 100%, 97%)",
+        text: "hsl(31, 92%, 45%)",
+        border: "hsl(49, 91%, 91%)",
+      },
+      success: {
+        bg: "hsl(143, 85%, 96%)",
+        border: "hsl(145, 92%, 91%)",
+        text: "hsl(140, 100%, 27%)",
+      },
+      error: {
+        bg: "hsl(359, 100%, 97%)",
+        border: "hsl(359, 100%, 94%)",
+        text: "hsl(360, 100%, 45%)",
+      },
     },
   },
   plugins: [

@@ -10,6 +10,7 @@ interface props {
   rowData: any;
   allSelected?: boolean | null;
   actions: IAction[];
+  data: any;
 }
 const TableRow = ({
   index,
@@ -18,6 +19,7 @@ const TableRow = ({
   rowData,
   allSelected,
   actions,
+  data,
 }: props) => {
   const [enabled, setEnabled] = useState(false);
   useEffect(() => {
@@ -27,6 +29,10 @@ const TableRow = ({
       setEnabled(false);
     }
   }, [allSelected]);
+
+  const getNestedValue = (obj: any, path: string) => {
+    return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+  };
   return (
     <div
       className={`
@@ -65,7 +71,7 @@ const TableRow = ({
       <div className="flex-[16] grid-cols-12 grid gap-2 py-2 ">
         {tableColumns?.map((head, Iindex) => {
           const colType = head.type ?? "text";
-          const value = rowData?.[head.ref] ?? "N/A";
+          const value = getNestedValue(rowData, head.ref) ?? "N/A";
           return (
             <div
               key={Iindex}
@@ -81,51 +87,56 @@ const TableRow = ({
         })}
       </div>
 
-      <div className="flex-[2] grid place-items-center cursor-pointer ">
-        <Menu>
-          <div className="hover:bg-mountain-mist-100 w-fit cursor-pointer p-1 rounded-md duration-500">
-            <MenuButton as="div">
-              <EllipsisHorizontalIcon className="text-mountain-mist-950 h-[1.2rem]" />
-            </MenuButton>
-            <MenuItems
-              anchor="bottom end"
-              as="div"
-              className={
-                "bg-white-50 pt-3 px-[2px] pb-[2px] rounded-md  border-mountain-mist-200 border-[0.8px] mt-[7px] shadow-lg"
-              }
-            >
-              <p className="font-semibold text-[0.9rem] pr-[7rem] mb-2 px-2">
-                Actions
-              </p>
-              {actions.map((item, inx) => {
-                return (
-                  <MenuItem
-                    key={inx}
-                    as={"div"}
-                    className={"hover:bg-mountain-mist-50 rounded-md"}
-                    onClick={() => {
-                      item.action("hi");
-                    }}
-                  >
-                    <div className="cursor-pointer flex items-center gap-2 p-2   ">
-                      <div>{item.icon}</div>
-                      <p
-                        className={`text-[0.8rem]  ${
-                          item.variant == "danger"
-                            ? "text-[#dc2626]"
-                            : "text-mountain-mist-600"
-                        }`}
-                      >
-                        {item.title}
-                      </p>
-                    </div>
-                  </MenuItem>
-                );
-              })}
-            </MenuItems>
-          </div>
-        </Menu>
-      </div>
+      {actions?.length != 0 && (
+        <div className="flex-[2] grid place-items-center cursor-pointer ">
+          <Menu>
+            <div>
+              <MenuButton
+                as="div"
+                className="hover:bg-mountain-mist-100 w-fit cursor-pointer p-1 rounded-md duration-500"
+              >
+                <EllipsisHorizontalIcon className="text-mountain-mist-950 h-[1.2rem]" />
+              </MenuButton>
+              <MenuItems
+                anchor="bottom end"
+                as="div"
+                className={
+                  "bg-white-50 pt-3 px-[2px] pb-[2px] rounded-md  border-mountain-mist-200 border-[0.8px] mt-[7px] shadow-lg"
+                }
+              >
+                <p className="font-semibold text-[0.9rem] pr-[7rem] mb-2 px-2">
+                  Actions
+                </p>
+                {actions.map((item, inx) => {
+                  return (
+                    <MenuItem
+                      key={inx}
+                      as={"div"}
+                      className={"hover:bg-mountain-mist-50 rounded-md"}
+                      onClick={() => {
+                        item.action(data);
+                      }}
+                    >
+                      <div className="cursor-pointer flex items-center gap-2 p-2   ">
+                        <div>{item.icon}</div>
+                        <p
+                          className={`text-[0.8rem]  ${
+                            item.variant == "danger"
+                              ? "text-[#dc2626]"
+                              : "text-mountain-mist-600"
+                          }`}
+                        >
+                          {item.title}
+                        </p>
+                      </div>
+                    </MenuItem>
+                  );
+                })}
+              </MenuItems>
+            </div>
+          </Menu>
+        </div>
+      )}
     </div>
   );
 };

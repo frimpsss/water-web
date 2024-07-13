@@ -5,8 +5,14 @@ interface props {
   allSelected: boolean;
   setAllSelected: (initialState: boolean | (() => boolean)) => void;
   table_columns: HeadersPropsWithRef[];
+  actionsLength: number;
 }
-const TableHeader = ({ allSelected, setAllSelected, table_columns }: props) => {
+const TableHeader = ({
+  allSelected,
+  setAllSelected,
+  table_columns,
+  actionsLength,
+}: props) => {
   return (
     <div className=" h-fit col-span-12 flex items-center border-b-[1px] pb-2   border-mountain-mist-100 px-4">
       <div className="h-fit flex-[1] ">
@@ -36,7 +42,7 @@ const TableHeader = ({ allSelected, setAllSelected, table_columns }: props) => {
         })}
       </div>
 
-      <div className="flex-[2] "></div>
+      {actionsLength != 0 && <div className="flex-[2] "></div>}
     </div>
   );
 };

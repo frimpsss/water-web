@@ -20,7 +20,7 @@ const Modal = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[3px] flex items-center justify-center "
+          className="fixed inset-0 bg-[#000] bg-opacity-20 backdrop-blur-[3px] flex items-center justify-center "
           onClick={() => {
             if (closeOnBackdropClicked) {
               toogleIsOpen();
@@ -32,7 +32,7 @@ const Modal = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white-50 rounded-lg p-8"
+            className="bg-white-50 rounded-lg p-5"
             onClick={(e) => e.stopPropagation()}
           >
             {children}
