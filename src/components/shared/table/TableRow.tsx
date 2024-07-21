@@ -93,7 +93,7 @@ const TableRow = ({
             <div>
               <MenuButton
                 as="div"
-                className="hover:bg-mountain-mist-100 w-fit cursor-pointer p-1 rounded-md duration-500"
+                className="hover:bg-mountain-mist-100  bg-white-50 w-fit cursor-pointer p-1 rounded-md duration-500"
               >
                 <EllipsisHorizontalIcon className="text-mountain-mist-950 h-[1.2rem]" />
               </MenuButton>

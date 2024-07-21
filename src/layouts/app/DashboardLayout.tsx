@@ -6,12 +6,11 @@ const DashboardLayout = () => {
   const r = useNavigate();
   const token = localStorage.getItem("auth");
 
-  if (!token) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!token) {
       r("/");
-    }, []);
-    return <></>;
-  }
+    }
+  }, []);
   return (
     <div className="grid grid-cols-5 w-screen h-screen">
       <div className="col-span-1">

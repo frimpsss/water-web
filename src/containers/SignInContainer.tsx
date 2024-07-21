@@ -6,8 +6,15 @@ import { signInMutation } from "../api/mutation/auth";
 import { SignInValidator } from "../utils/validators/signInInputValidators";
 import { toast } from "sonner";
 import Spinner from "../components/shared/Spinner";
+import { useEffect } from "react";
 const SignInContainer = () => {
   const r = useNavigate();
+  const token = localStorage.getItem("auth");
+  useEffect(() => {
+    if (token) {
+      r("/dashboard");
+    }
+  }, []);
   const { ...form } = useFormik({
     initialValues: {
       email: "",
@@ -27,7 +34,7 @@ const SignInContainer = () => {
     },
     onError(error: any, variables, context) {
       toast.error(error?.message ?? "An error occured");
-      form.resetForm()
+      form.resetForm();
     },
   });
 

@@ -4,7 +4,7 @@ const baseURL = "https://aquatrack.fly.dev";
 
 export const apiWithAuth = axios.create({
   baseURL: baseURL,
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 export const apiNoAuth = axios.create({
