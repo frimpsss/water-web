@@ -19,3 +19,21 @@ export async function getCurrentTarffis() {
     }
   }
   
+
+  export async function getAllTarffis() {
+    try {
+      const response = await apiWithAuth({
+        method: "get",
+        url: "/api/tariff/tariffs",
+      });
+  
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || "An error occurred");
+      }
+  
+      throw error;
+    }
+  }
+  

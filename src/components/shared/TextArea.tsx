@@ -10,7 +10,7 @@ interface TextInputProps {
   id: string;
   handleChange: any;
   handleBlur: any;
-  type: "text" | "password" | "number" | "date";
+  type: "text" | "password" | "number";
   placeholder: string;
   label: string;
   touched: any;
@@ -18,7 +18,7 @@ interface TextInputProps {
   err?: string;
   boldenText?: boolean;
 }
-const TextInput = ({
+const TextArea = ({
   values,
   errors,
   id,
@@ -45,11 +45,11 @@ const TextInput = ({
         {label}
       </label>
       <div className="relative mt-2">
-        <input
+        <textarea
+        rows={3}
           name={id}
           id={id}
-          type={type !== "password" ? type : showPassword ? "text" : type}
-          value={values[id]}
+          className="shadow-sm focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-gray-300 rounded-md p-2"
           onChange={(e) => {
             setVisibile(true);
             touched[id] = true;
@@ -63,8 +63,7 @@ const TextInput = ({
           onFocus={(e) => {
             setVisibile(true);
           }}
-          className="shadow-sm focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-gray-300 rounded-md p-2"
-        />
+        ></textarea>
         {errors[id] && touched[id] && type !== "password" ? (
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <ExclamationCircleIcon
@@ -115,4 +114,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default TextArea;

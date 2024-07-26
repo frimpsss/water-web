@@ -17,6 +17,11 @@ const DashboardNavbar = () => {
       icon: "Activity",
     },
     {
+      title: "Analytics",
+      link: "/dashboard/analytics",
+      icon: "AlignBottom",
+    },
+    {
       title: "Transactions",
       link: "/dashboard/transactions",
       icon: "TransactionMinus",
@@ -71,11 +76,6 @@ const DashboardNavbar = () => {
       link: "/dashboard/meters",
       icon: "MainComponent",
     },
-    {
-      title: "Settings",
-      link: "/dashboard/settings",
-      icon: "Setting2",
-    },
   ];
 
   const { isLoading } = useQuery("admin-info", {
@@ -93,7 +93,7 @@ const DashboardNavbar = () => {
       <section className="">
         <div className="flex gap-4 items-center mb-8">
           <img src={whitelogo} className="w-[30px]" />
-          <h1 className="text-[#fff] font-medium text-[1.5rem]">Aquatrack</h1>
+          <h1 className="text-[#fff] font-medium text-[1.5rem]">AquaTrack</h1>
         </div>
 
         {/* nav */}

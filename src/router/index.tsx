@@ -13,7 +13,7 @@ const Meters = lazy(() => import("../pages/app/Meters"));
 const Transactions = lazy(() => import("../pages/app/Transactions"));
 const Tarrifs = lazy(() => import("../pages/app/Tarrifs"));
 const Reports = lazy(() => import("../pages/app/Reports"));
-const Settings = lazy(() => import("../pages/app/Settings"));
+const Settings = lazy(() => import("../pages/app/Analytics"));
 
 const LazyWrapper = ({ children }) => (
   <Suspense fallback={<Loader />}>{children}</Suspense>
@@ -135,7 +135,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "settings",
+        path: "analytics",
         element: (
           <LazyWrapper>
             <Settings />

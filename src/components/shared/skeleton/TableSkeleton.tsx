@@ -5,7 +5,7 @@ interface props {
 const TableSkeleton = ({ table_columns }: props) => {
   const skeletonRows = Array.from({ length: 7 });
   return (
-    <div className="col-span-12 w-full grid grid-cols-12 ">
+    <div className="col-span-12 w-full grid grid-cols-12 " >
       <div className=" h-fit col-span-12 pt-2  rounded-t-md flex items-center gap-2 border-b-[1px] pb-2   border-mountain-mist-100  animate-pulse">
         <div className="h-8  flex-[1] bg-mountain-mist-100 rounded-md"></div>
 
