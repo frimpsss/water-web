@@ -13,7 +13,7 @@ const Settings = () => {
     { name: "Group F", value: 189 },
   ];
   useEffect(() => {
-    returnGroupedAndTotal()
+    // returnGroupedAndTotal()
   });
   const datahero = [
     {
