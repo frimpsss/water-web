@@ -1,41 +1,42 @@
 import React from "react";
-import { formatDate } from "../../../utils";
-import TariffStatus from "../TariffStatus";
+import { formatDate } from "../../utils";
 
-const ViewTariffDetailsModal = ({ data, closeModal }: any) => {
+const ViewReportModal = ({ data, closeModal }: any) => {
+  console.log(data);
   return (
     <div className="w-[35vw] p-2">
       <div className=" border-b-[1px] border-mountain-mist-200">
         <h4 className="text-ebony-950 font-bold text-[1.6rem] leading-[2.4rem]">
-          View Tariff Details
+          View Report
         </h4>
         <p className="text-mountain-mist-300 text-[0.99rem] font-extralight">
-          Display details for a selected tariff
+          Display details for a report details
         </p>
       </div>
       <div className="grid grid-cols-2 w-full my-4 gap-y-2">
-        <DetailBox title="Name" value={data?.name} />
-        <DetailBox title="Rate" value={`${data?.rate}%`} />
+        <DetailBox title={"Created By"} value={data?.userId?.name} />
         <DetailBox
-          title="Effective From"
-          value={formatDate(new Date(data?.effectiveFrom))}
-        />
-        <DetailBox
-          title="Effective To"
-          value={formatDate(new Date(data?.effectiveTo))}
-        />
-        <DetailBox
-          title="Date Created"
+          title={"Date Created"}
           value={formatDate(new Date(data?.createdAt))}
         />
-        <DetailBox
-          title="Last Updated"
-          value={formatDate(new Date(data?.updatedAt))}
-        />
-        <DetailBox title="Status" value={data.status} status />
         <div className="col-span-2">
-          <DetailBox title="Description" value={data?.description} />
+          <DetailBox title={"Title"} value={data?.title} />
         </div>
+        <div className="col-span-2">
+          <DetailBox title={"Description"} value={data?.description} />
+        </div>
+        <div className="col-span-2">
+          <DetailBox
+            title={"Attended to"}
+            value={data?.attendedTo}
+            status={true}
+          />
+        </div>
+        {data?.attendedTo && (
+          <div className="col-span-2">
+            <DetailBox title={"Remarks"} value={data?.remarks} />
+          </div>
+        )}
       </div>
       <div className=" border-t-[1px] border-mountain-mist-200 pt-4">
         <div
@@ -50,6 +51,7 @@ const ViewTariffDetailsModal = ({ data, closeModal }: any) => {
     </div>
   );
 };
+
 function DetailBox({
   title,
   value,
@@ -71,12 +73,18 @@ function DetailBox({
           </p>
         </span>
       ) : (
-        <div className="w-[50%] mt-1">
-          {/* <VerificationStatus value={value} /> */}
-          <TariffStatus value={value} />
+        <div className=" mt-1">
+          <p
+            className={`text-[0.1.1rem] px-1  font-semibold  ${
+              value ? "text-success-text" : "text-error-text"
+            }`}
+          >
+            {value ? "YES" : "NO"}
+          </p>
         </div>
       )}
     </div>
   );
 }
-export default ViewTariffDetailsModal;
+
+export default ViewReportModal;

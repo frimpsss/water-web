@@ -86,7 +86,7 @@ const ModifyTariffRate = ({ closeModal, id }: any) => {
             form.handleSubmit();
           }}
         >
-          {isLoading ? <Spinner stroke="#fff" /> : "create"}
+          {isLoading ? <Spinner stroke="#fff" /> : "update"}
         </button>
       </div>
     </div>

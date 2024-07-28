@@ -123,7 +123,13 @@ const Settings = () => {
 
   return (
     <div className="grid grid-cols-12 min-h-[90svh] gap-4">
+      <div className="flex items-center justify-between col-span-12">
+        <h4 className="font-bold text-mantis-950 text-[2.3rem]">Reports</h4>
+      </div>
       {/* <ResponsiveContainer width="100%" height="100%"> */}
+      <div className="col-span-6">
+        <p>Consumtion Data btwn 2 dates</p>
+      </div>
       <div className="col-span-6 grid place-content-center">
         <PieChart width={400} height={400}>
           <Pie
@@ -140,9 +146,6 @@ const Settings = () => {
         </PieChart>
       </div>
 
-      <div className="col-span-6">
-        <p>Consumtion Data btwn 2 dates</p>
-      </div>
       <AreaChart
         className="col-span-12 "
         data={chartdata}

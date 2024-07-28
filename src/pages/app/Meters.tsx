@@ -50,13 +50,18 @@ const Meters = () => {
   ];
 
   return (
-    <div>
-      <TableComponent
-        headers={tableHeaders}
-        data={data}
-        loading={isFetching}
-        actions={[]}
-      />
+    <div className="col-span-12 row-span-2  flex flex-col gap-6 ">
+      <div className="flex items-center justify-between col-span-12">
+        <h4 className="font-bold text-mantis-950 text-[2.3rem]">Meters</h4>
+      </div>
+      <div>
+        <TableComponent
+          headers={tableHeaders}
+          data={data}
+          loading={isFetching}
+          actions={[]}
+        />
+      </div>
     </div>
   );
 };
