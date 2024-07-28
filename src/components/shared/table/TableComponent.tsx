@@ -109,13 +109,13 @@ const TableComponent = ({
             className=" focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-white-300 rounded-md py-2 pl-8 relative"
           />
         </div>
-        {addTitle == "" && (
+        {addTitle && (
           <button
-            className="text-white-50 bg-mantis-950 flex items-center gap-2  px-5 py-[0.4rem] rounded-md"
+            className="text-white-50 bg-mantis-950 flex items-center gap-2 px-5 py-[0.4rem] rounded-md"
             onClick={onClickAdd}
           >
             <PlusIcon className="h-[18px] text-white-50" />
-            <p> Add {addTitle}</p>
+            <p>{addTitle}</p>
           </button>
         )}
       </div>

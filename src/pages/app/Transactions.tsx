@@ -62,7 +62,7 @@ const Transactions = () => {
       component(value) {
         return (
           <p className="text-[0.86rem] text-mountain-mist-500">
-            Bill payment for {monthNames[getMonthAndYear(value).month]} -{" "}
+            Bill payment for {monthNames[getMonthAndYear(value).month - 1]} -{" "}
             {getMonthAndYear(value).year}
           </p>
         );
@@ -76,7 +76,7 @@ const Transactions = () => {
       component: (value) => {
         return (
           <p className="text-[0.86rem] text-mountain-mist-500">
-            {formatDate(new Date(value))}
+            {value && formatDate(new Date(value))}
           </p>
         );
       },
@@ -89,7 +89,7 @@ const Transactions = () => {
       component: (value) => {
         return (
           <p className="text-[0.86rem] text-mountain-mist-500">
-            GHS {parseInt(value).toFixed(2)}
+            GHS {value && parseFloat(value).toFixed(2)}
           </p>
         );
       },
@@ -123,15 +123,14 @@ const Transactions = () => {
   return (
     <div className="flex flex-col gap-6">
       <TransactionsStats {...txnStats} loading={isFetching} />
-      <Table
-        loading={isFetching}
-        actions={[]}
-        headers={tableHeaders}
-        data={data}
-        onClickAdd={() => {
-          setOpen(true);
-        }}
-      />
+      <div>
+        <Table
+          loading={isFetching}
+          actions={[]}
+          headers={tableHeaders}
+          data={data}
+        />
+      </div>
 
       <Sidebar
         isOpen={open}

@@ -1,42 +1,44 @@
-import { useMutation } from "react-query";
-import { changeTariffRate } from "../../../api/mutation/tariffs";
-import { toast } from "sonner";
-import * as Y from "yup";
 import { useFormik } from "formik";
-import TextInput from "../../shared/InputField";
+import CustomSelect from "../../shared/Select";
+import { monthNames } from "../../../utils";
+import { useMutation } from "react-query";
+import { generateBills } from "../../../api/mutation/billing";
 import Spinner from "../../shared/Spinner";
-const ModifyTariffRate = ({ closeModal, id }: any) => {
+import { toast } from "sonner";
+import { isAxiosError } from "axios";
+
+const GenerateBillModal = ({ closeModal }: { closeModal: () => void }) => {
   const { mutate, isLoading } = useMutation({
-    mutationFn: changeTariffRate,
-    mutationKey: ["change-rate"],
-    onError: (error) => {
-      toast.error("An error occured");
-    },
+    mutationFn: generateBills,
+    mutationKey: ["generate-bills"],
     onSuccess: (data) => {
-      toast.success("Operation succesful");
+      toast.success("Bills generated successfully");
+    },
+    onError: (err) => {
+      if (isAxiosError(err)) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("An error occured");
+      }
     },
     onSettled: () => {
       closeModal();
     },
   });
-  const validationSchema = Y.object().shape({
-    effectiveTo: Y.date().required("Effective To date is required"),
-    newRate: Y.number().required("Rate is required"),
-  });
   const { ...form } = useFormik({
     initialValues: {
-      newRate: "",
-      effectiveTo: "",
+      month: "",
     },
     onSubmit(values, formikHelpers) {
-      Object.keys(values)?.map((e) => {
+      Object.keys(form.values)?.map((e) => {
         form.setFieldTouched(e, true);
       });
       if (form.isValid && form?.dirty) {
+        // mutate({
+        //   name: values.name,
+        // });
         mutate({
-          id: id,
-          newRate: parseFloat(values.newRate),
-          effectiveTo: values.effectiveTo,
+          month: form.values.month,
         });
       }
     },
@@ -45,28 +47,19 @@ const ModifyTariffRate = ({ closeModal, id }: any) => {
     <div className="w-[39vw] p-2">
       <div className=" border-b-[1px] border-mountain-mist-200">
         <h4 className="text-ebony-950 font-bold text-[1.6rem] leading-[2.4rem]">
-          Create New Tariff
+          Generate Bills
         </h4>
         <p className="text-mountain-mist-300 text-[0.99rem] font-extralight">
-          Create a new Tariff Class
+          Compute all bills for a certain period
         </p>
       </div>
 
-      <div className="p-1 grid grid-cols-1 gap-6 pt-5">
-        <TextInput
-          id={"newRate"}
-          boldenText={true}
-          type={"number"}
-          placeholder={"e.g. 1.3"}
-          label={"Rate"}
-          {...form}
-        />
-        <TextInput
-          boldenText={true}
-          id={"effectiveTo"}
-          type={"date"}
-          placeholder={"e.g. 1.3"}
-          label={"Effective To"}
+      <div className="my-6">
+        <CustomSelect
+          boldText
+          options={monthNames}
+          id={"month"}
+          label={"Select billing period month"}
           {...form}
         />
       </div>
@@ -93,4 +86,4 @@ const ModifyTariffRate = ({ closeModal, id }: any) => {
   );
 };
 
-export default ModifyTariffRate;
+export default GenerateBillModal;

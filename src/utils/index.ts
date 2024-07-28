@@ -98,7 +98,7 @@ export const getTotalAmountPaid = (
 
   transactions?.forEach((transaction) => {
     const paymentDate = new Date(transaction?.createdAt);
-    const amountPaid = transaction?.billId?.totalAmountDue;
+    const amountPaid = transaction?.billId?.totalAmountDue || 0;
 
     totalAmountPaidOverall += amountPaid;
 
