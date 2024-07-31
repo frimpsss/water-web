@@ -6,11 +6,11 @@ const VerificationStatus = ({ value }: { value: string }) => {
     setClx(() => {
       switch (value) {
         case "PENDING":
-          return "bg-pending-bg text-pending-text bg-pending-bg  ";
+          return "bg-pending-bg text-pending-text border-pending-border  ";
         case "VERIFIED":
-          return "bg-success-bg text-success-text bg-success-bg  ";
+          return "bg-success-bg text-success-text bg-success-bg border-success-border ";
         case "REJECTED":
-          return "bg-error-bg text-error-text bg-error-bg  ";
+          return "bg-error-bg text-error-text bg-error-bg border-error-border ";
       }
     });
   }, [value]);

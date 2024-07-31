@@ -36,6 +36,7 @@ const TableSkeleton = ({ table_columns }: props) => {
               {table_columns?.map((head, Iindex) => {
                 return (
                   <div
+                    key={Iindex}
                     className={` ${head.span} h-6 rounded bg-mountain-mist-100`}
                   ></div>
                 );

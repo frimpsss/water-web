@@ -7,7 +7,6 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import TextArea from "../shared/TextArea";
 import TextInput from "../shared/InputField";
-import { Checkbox } from "@headlessui/react";
 
 const CreateMessageModal = ({ closeModal }: { closeModal: () => void }) => {
   const [sendPush, setSendPush] = useState<boolean>(false);
@@ -15,10 +14,10 @@ const CreateMessageModal = ({ closeModal }: { closeModal: () => void }) => {
     mutationFn: sendMessage,
     mutationKey: ["send-message"],
     onError: (error) => {
-      toast.error("An error occured");
+      toast.error("An error occurred");
     },
     onSuccess: (data) => {
-      toast.success("Message sent succesfully");
+      toast.success("Message sent successfully");
     },
     onSettled: () => {
       closeModal();

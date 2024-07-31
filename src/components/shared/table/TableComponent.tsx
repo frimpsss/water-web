@@ -1,4 +1,5 @@
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/20/solid";
+
 import { IProps as HeadersProps } from "./TableHeaderItem";
 import { useEffect, useState } from "react";
 import useUrlState from "../../../hooks/useUrlState";
@@ -7,6 +8,7 @@ import Pagination from "./Pagination";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 import TableSkeleton from "../skeleton/TableSkeleton";
+import NoData from "../NoData";
 type colType = "text" | "element";
 
 export interface IAction {
@@ -27,6 +29,8 @@ interface props {
   onClickAdd?: () => void;
   actions: IAction[];
   loading: boolean;
+  showSearch?: boolean;
+  showPagination?: boolean;
 }
 const TableComponent = ({
   data,
@@ -35,6 +39,8 @@ const TableComponent = ({
   onClickAdd,
   actions,
   loading,
+  showSearch = false,
+  showPagination = true,
 }: props) => {
   const { appendQuery, getQueryValue, deleteQuery } = useUrlState();
 
@@ -99,16 +105,18 @@ const TableComponent = ({
 
   return (
     <div className="grid grid-cols-12  h-full gap-y-6">
-      <div className="flex items-center justify-between col-span-12 ">
-        <div className="relative w-72">
-          <div className="absolute left-0 pl-2 h-full z-10 grid place-items-center">
-            <MagnifyingGlassIcon className="h-[18px] text-white-400" />
+      <div className={`flex items-center ${showSearch ? 'justify-between': 'justify-end'} col-span-12 `}>
+        {showSearch && (
+          <div className="relative w-72">
+            <div className="absolute left-0 pl-2 h-full z-10 grid place-items-center">
+              <MagnifyingGlassIcon className="h-[18px] text-white-400" />
+            </div>
+            <input
+              placeholder="Search..."
+              className=" focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-white-300 rounded-md py-2 pl-8 relative"
+            />
           </div>
-          <input
-            placeholder="Search..."
-            className=" focus:ring-mantis-950 focus:border-mantis-950  block w-full sm:text-sm border-white-300 rounded-md py-2 pl-8 relative"
-          />
-        </div>
+        )}
         {addTitle && (
           <button
             className="text-white-50 bg-mantis-950 flex items-center gap-2 px-5 py-[0.4rem] rounded-md"
@@ -121,6 +129,10 @@ const TableComponent = ({
       </div>
       {loading ? (
         <TableSkeleton table_columns={headers} />
+      ) : data?.length == 0 ? (
+        <div className="grid place-content-center col-span-12 ">
+          <NoData />
+        </div>
       ) : (
         <div className="col-span-12">
           <div className="bg-white-50 pt-2  grid grid-cols-12  rounded-md border-[1px] border-mountain-mist-100 ">
@@ -145,16 +157,18 @@ const TableComponent = ({
               );
             })}
           </div>
-          <Pagination
-            limit={limit}
-            handleLimitChange={handleLimitChange}
-            start={start}
-            totalNumberOfItems={data?.length}
-            handleFirstPage={handleFirstPage}
-            handlePreviousPage={handlePreviousPage}
-            handleNextPage={handleNextPage}
-            handleLastPage={handleLastPage}
-          />
+          {showPagination && (
+            <Pagination
+              limit={limit}
+              handleLimitChange={handleLimitChange}
+              start={start}
+              totalNumberOfItems={data?.length}
+              handleFirstPage={handleFirstPage}
+              handlePreviousPage={handlePreviousPage}
+              handleNextPage={handleNextPage}
+              handleLastPage={handleLastPage}
+            />
+          )}
         </div>
       )}
     </div>

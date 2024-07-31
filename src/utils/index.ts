@@ -47,13 +47,13 @@ export async function returnGroupedAndTotal() {
       });
     });
 
-    console.log(flattened);
 
     const flattened_sorted = _.groupBy(flattened, (obj) =>
       new Date(obj?.timeStamp * 1000).toDateString().split("T")
     );
 
-    console.log("total: ", flattened_sorted);
+    
+    return flattened_sorted
   } catch (error) {
     console.log(error);
   }

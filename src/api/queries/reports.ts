@@ -17,3 +17,20 @@ export async function getAllReports() {
     throw error;
   }
 }
+
+export async function recentReports() {
+  try {
+    const response = await apiWithAuth({
+      method: "get",
+      url: "/api/reports/recent-reports",
+    });
+
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "An error occurred");
+    }
+
+    throw error;
+  }
+}
