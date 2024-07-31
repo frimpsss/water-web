@@ -13,6 +13,7 @@ import RecentComponents from "../../components/home/RecentComponents";
 import { getStats } from "../../api/queries/info";
 import _ from "lodash";
 import { useMeterReadingsGroupedByDay } from "../../hooks/useConsumption";
+import NoData from "../../components/shared/NoData";
 
 interface IStats {
   consumption: number | string;
@@ -26,17 +27,19 @@ const App = () => {
   const { groupedData, loading } = useMeterReadingsGroupedByDay();
 
 useEffect(()=>{
-  if (!loading) {
+  if (!loading && groupedData.length != 0) {
     const toBeDisplayed = groupedData?.filter((e) => {
       return new Date(e.date)?.getTime() == 1722384000000;
     });
 
     const chartdata = Object.values(toBeDisplayed?.[0]?.hourlyData);
     const cleanChartData = chartdata.map((e) => {
-      return {
-        time: e.hour,
-        consumption: e.totalConsumption,
-      };
+      if(e){
+        return {
+          time: e?.hour,
+          consumption: e?.totalConsumption,
+        };
+      }
     });
 
     setCd(cleanChartData);
@@ -216,14 +219,16 @@ useEffect(()=>{
             <p className="text-mantis-950">Consumption Data</p>
           </div>
           <div className="overflow-scroll">
-            <AreaChart
+            {groupedData.length != 0 ?<AreaChart
               data={cd}
               index="time"
               categories={["consumption"]}
               colors={["indigo"]}
               // valueFormatter={dataFormatter}
               yAxisWidth={60}
-            />
+            /> : <div className="mt-6">
+                <NoData />
+              </div>}
           </div>
         </div>
         <div className="col-span-4 bg-white-50 rounded-md  p-4 ">

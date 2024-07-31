@@ -1,7 +1,6 @@
 import { AreaChart } from "@tremor/react";
 import { useEffect, useState } from "react";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
-import { dataFromFirebase } from "../../utils/firebase";
 import { formatDate, returnGroupedAndTotal } from "../../utils";
 import { useMeterReadingsGroupedByDay } from "../../hooks/useConsumption";
 const Settings = () => {
@@ -11,7 +10,7 @@ const Settings = () => {
   const { groupedData, loading } = useMeterReadingsGroupedByDay();
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && groupedData.length !=0 ) {
       const toBeDisplayed = groupedData?.filter((e) => {
         return new Date(e.date)?.getTime() == 1722384000000;
       });
@@ -69,6 +68,7 @@ const Settings = () => {
           />
           <Tooltip />
         </PieChart>
+        <h4 className="text-center">Pie Chart of each hour and thee consumption</h4>
       </div>
 
       <div className="col-span-12 ">
